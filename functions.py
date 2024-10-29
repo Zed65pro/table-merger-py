@@ -7,7 +7,7 @@ from utils import Colors
 
 def load_data(file_path):
     try:
-        if file_path.endswith((".xlsx", ".xls", ".xlsm")):
+        if file_path.endswith(('.xlsx', '.xls', '.xlsm')):
             file = pd.ExcelFile(file_path)
             sheets = file.sheet_names
 
@@ -20,32 +20,32 @@ def load_data(file_path):
             if sheet_name:
                 return pd.read_excel(file_path, sheet_name=sheet_name)
             else:
-                messagebox.showerror("Sheet Error", "Sheet selection canceled.")
+                messagebox.showerror('Sheet Error', 'Sheet selection canceled.')
                 return None
 
         # If the file is a CSV type, read it directly with read_csv
-        elif file_path.endswith(".csv"):
+        elif file_path.endswith('.csv'):
             return pd.read_csv(file_path)
 
         else:
             if file_path:
-                messagebox.showerror("Error", "Unsupported file format. Please select an Excel or CSV file.")
+                messagebox.showerror('Error', 'Unsupported file format. Please select an Excel or CSV file.')
             return None
 
     except Exception as e:
-        messagebox.showerror("Error", f"Error loading file: {e}")
+        messagebox.showerror('Error', f'Error loading file: {e}')
         return None
 
 
 def prompt_sheet_selection(sheets):
     # This function basically creates a modal on top of tkinter app - which prompts user to select sheet name and return it
     top = Toplevel(background=Colors.primary_color)
-    top.title("Select Sheet")
+    top.title('Select Sheet')
 
-    label = ttk.Label(top, text="Choose a sheet:")
+    label = ttk.Label(top, text='Choose a sheet:')
     label.pack(padx=100, pady=50)
 
-    combo = ttk.Combobox(top, values=sheets, state="readonly")
+    combo = ttk.Combobox(top, values=sheets, state='readonly')
     combo.pack(padx=20, pady=20)
     combo.current(0)
 
@@ -55,7 +55,7 @@ def prompt_sheet_selection(sheets):
         selected_sheet[0] = combo.get()
         top.destroy()
 
-    ok_button = ttk.Button(top, text="OK", command=on_ok)
+    ok_button = ttk.Button(top, text='OK', command=on_ok)
     ok_button.pack(padx=10, pady=10)
 
     top.transient()
@@ -69,7 +69,7 @@ def prompt_sheet_selection(sheets):
 def merge_data(master_key, slave_key, remove_duplicates, remove_master_duplicates, remove_slave_duplicates, master_df,
                slave_df, master_columns, slave_columns, join_type):
     if not master_key or not slave_key:
-        messagebox.showwarning("Warning", "Please select keys for merging.")
+        messagebox.showwarning('Warning', 'Please select keys for merging.')
         return None
 
     # filter columns based on selection
@@ -92,14 +92,14 @@ def merge_data(master_key, slave_key, remove_duplicates, remove_master_duplicate
 
         return merged_df
     except Exception as e:
-        messagebox.showerror("Error", f"Error merging data: {e}")
+        messagebox.showerror('Error', f'Error merging data: {e}')
         return None
 
 
 def merge_and_save(master_key, slave_key, remove_duplicates, remove_master_duplicates, remove_slave_duplicates,
                    master_df, slave_df, master_columns, slave_columns, join_type):
     if master_df is None or slave_df is None:
-        messagebox.showwarning("Warning", "Please load both master and slave files.")
+        messagebox.showwarning('Warning', 'Please load both master and slave files.')
         return
 
     merged_df = merge_data(master_df=master_df, slave_df=slave_df, master_key=master_key, slave_key=slave_key,
@@ -111,22 +111,22 @@ def merge_and_save(master_key, slave_key, remove_duplicates, remove_master_dupli
     if merged_df is None:
         return
 
-    save_path = filedialog.asksaveasfilename(defaultextension=".xlsx",
-                                             filetypes=[("Excel files", "*.xlsx"), ("CSV files", "*.csv")],
-                                             title="Save Merged File")
+    save_path = filedialog.asksaveasfilename(defaultextension='.xlsx',
+                                             filetypes=[('Excel files', '*.xlsx'), ('CSV files', '*.csv')],
+                                             title='Save Merged File')
     if save_path:
         try:
-            if save_path.endswith(".xlsx"):
+            if save_path.endswith('.xlsx'):
                 merged_df.to_excel(save_path, index=False)
-            elif save_path.endswith(".csv"):
+            elif save_path.endswith('.csv'):
                 merged_df.to_csv(save_path, index=False)
-            messagebox.showinfo("Success", f"Merged file saved as {save_path}")
+            messagebox.showinfo('Success', f'Merged file saved as {save_path}')
         except Exception as e:
-            messagebox.showerror("Error", f"Error saving file: {e}")
+            messagebox.showerror('Error', f'Error saving file: {e}')
 
 
 def select_file(file_entry, combobox, columns_inner_frame, columns_scrollbar):
-    file_path = filedialog.askopenfilename(filetypes=[("Excel and CSV files", "*.xlsx *.csv")])
+    file_path = filedialog.askopenfilename(filetypes=[('Excel and CSV files', '*.xlsx *.csv')])
     if not file_path:
         return None
     file_entry.delete(0, tk.END)
@@ -156,7 +156,7 @@ def populate_columns(df, columns_inner_frame, columns_scrollbar):
     for col in df.columns:
         var = tk.BooleanVar(value=True)
         checkbox = ttk.Checkbutton(columns_inner_frame, text=col, variable=var)
-        checkbox.pack(anchor="w")
+        checkbox.pack(anchor='w')
         columns[col] = var
 
     if df.shape[1] > 0:
