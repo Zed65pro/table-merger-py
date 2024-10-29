@@ -127,7 +127,8 @@ def merge_and_save(master_key, slave_key, remove_duplicates, remove_master_dupli
 
 def select_file(file_entry, combobox, columns_inner_frame, columns_scrollbar):
     file_path = filedialog.askopenfilename(filetypes=[("Excel and CSV files", "*.xlsx *.csv")])
-
+    if not file_path:
+        return None
     file_entry.delete(0, tk.END)
     file_entry.insert(0, file_path)
 
@@ -137,8 +138,12 @@ def select_file(file_entry, combobox, columns_inner_frame, columns_scrollbar):
         # Populate combobox with column names
         columns = populate_columns(df=df, columns_inner_frame=columns_inner_frame,
                                    columns_scrollbar=columns_scrollbar)
+        combobox.set('')
         combobox['values'] = df.columns.tolist()
         combobox['state'] = 'readonly'
+    else:
+        for widget in columns_inner_frame.winfo_children():
+            widget.destroy()
     return df, columns
 
 

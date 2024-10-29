@@ -101,18 +101,21 @@ class TableMerger:
                       row=8, column=1)
 
     def update_master_df_and_columns(self):
-        self.master_df, self.master_columns = select_file(
+        result = select_file(
             file_entry=self.master_file_entry,
             combobox=self.master_key_combobox,
             columns_inner_frame=self.master_columns_inner_frame,
             columns_scrollbar=self.master_columns_scrollbar)
+        if result:
+            self.master_df, self.master_columns = result
 
     def update_slave_df_and_columns(self):
-        self.slave_df, self.slave_columns = select_file(
+        result = select_file(
             file_entry=self.slave_file_entry,
             combobox=self.slave_key_combobox,
             columns_inner_frame=self.slave_columns_inner_frame,
             columns_scrollbar=self.slave_columns_scrollbar)
+        self.slave_df, self.slave_columns = result
 
 
 if __name__ == "__main__":
