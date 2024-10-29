@@ -9,7 +9,7 @@ A desktop application built with Python, using `tkinter` for the interface and `
 
 Install `pandas` using pip if you haven't already:
 ```bash
-pip install pandas
+pip install -r requirements.txt
 ```
 
 Run the app by going into the directory and running

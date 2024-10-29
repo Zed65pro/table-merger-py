@@ -23,7 +23,7 @@ class TableMerger:
         # Initialize Tkinter root
         root.title("Excel File Merger")
         root.geometry("650x700")
-        root.iconbitmap("document.ico")
+        root.iconbitmap("assets/document.ico")
 
         # Create a main frame
         main_frame = ttk.Frame(root)
